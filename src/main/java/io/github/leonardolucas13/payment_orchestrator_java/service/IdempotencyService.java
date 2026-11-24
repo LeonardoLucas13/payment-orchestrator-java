@@ -3,7 +3,7 @@ package io.github.leonardolucas13.payment_orchestrator_java.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import io.github.leonardolucas13.payment_orchestrator_java.model.IdempotencyKey;
@@ -47,5 +47,10 @@ public class IdempotencyService {
         idem.setStatus("completed");
         idem.setResponseCode(responseCode);
         idem.setResponseBody(responseBody);
+    }
+
+    @Transactional
+        public void release(String key) {
+        repository.deleteById(key);
     }
 }
